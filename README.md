@@ -1,0 +1,1 @@
+kill(all); A:matrix([1,3,1,−2],[2,4,−1,2],[3,1,1,5],[4,2,−1,6]); n:4; for i:1 thru n do( for j:1 thru n do(    if(i=j) then l[i,j]:1,if (j>i) then l[i,j]:0)); for i:1 thru n do( for j:1 thru n do(    if (i>j) then u[i,j]:0)); L:genmatrix(l,n,n); U:genmatrix(u,n,n); S:L.U−A;
