@@ -1,4 +1,6 @@
 # Maxima Mathematical Software
+## Languages
+- Maxima (.wxmx files)
 
 Welcome to the Maxima Mathematical Software repository! This software is designed to tackle various mathematical problems, including solving differential equations (ordinary and partial), implementing numerical analysis techniques such as root finding methods, interpolation, differentiation, integration, and solving systems of linear equations.
 
