@@ -1,4 +1,4 @@
-# ![Maxima Mathematical Software](Maxima-new.svg.png) Maxima Mathematical Software
+<img src="Maxima-new.svg.png" alt="Maxima Mathematical Software" width="200"> 
 
 ## Languages
 - **Maxima** (.wxmx files)
