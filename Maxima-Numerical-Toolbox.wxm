@@ -1,0 +1,317 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: section start ]
+Bisection Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d(cos(x)-x,[x,-3,4],[y,-15,15]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+'a=a:0.7$
+'b=b:0.8$
+n:100;
+f(x):=cos(x)-x$
+'err=err:.005;
+if(float(f(a)·f(b)>0)) then
+print(" change values")
+else (for i:1 thru n do(c:(a+b)/2,print(c),
+        if(abs(b−a)<err)then (print("root cgs in",i−1,"iteration"),return())
+        else if(f(c)·f(a)<0)then b:c else a:c))$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton Raphson method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+plot2d(27*x^4+162*x^3-180*x^2+62*x-7,[x,-3,4],[y,-15,15]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$f(x):=27*x^4+162*x^3-180*x^2+62*x-7;
+define(df(x),diff(f(x),x));
+'x0=x0:0.0;'n=n:10;
+'err=err:5*10^-5;
+print("itr","","root")$
+for i:1 thru n do (
+x1:float(x0−f(x0)/df(x0)),print(i,"",x1),
+if(abs(x1−x0)<err)then
+(print("root converges in",i,"iteration"),
+return(""))
+else
+x0:x1)$
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Secant Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$f(x):=%e^-x-x;
+plot2d(f(x),[x,0,2.0],[grid,1,1],[ylabel,"f(x)"]);
+'x0=x0:1.0;'x1=x1:0.0;
+'n=n:10;
+print("itr","","","","root")$
+'j=j:0$
+for i:1 thru 8 do
+(x2:(x1−((x1−x0)/(f(x1)−f(x0)))·f(x1)),j:j+1,
+print(i,"","","",x2),
+if(abs(x2−x1)<.000005)then
+(print("root converges in",i,"iteration"),return())
+else(x0:x1,x1:x2))$
+print("after iteration",j,"root is",x2)$
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+LU Decomposition Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* Define the coefficient matrix A */
+A: matrix([1, 2, 3], [2,0,4], [1,1,2]);
+
+/* Define the right-hand side vector b */
+b: matrix([2], [3], [4]);
+
+/* Perform LU decomposition */
+lup: lu_factor(A);
+
+/* Extract LU factors */
+[P, L, U]: get_lu_factors(lup);
+
+/* Solve for the given right-hand side */
+solution: lu_backsub(lup, b);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Gauss Jacobi Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+'n=n:3;
+'a=a:matrix([5,1,2],[3,−9,−4],[1,2,−7]);
+'x=x:matrix([0.0],[0.0],[0.0]);
+'b=b:matrix([10],[14],[−33]);
+print("itr","","","","x1","","","","x2","","","","x3");
+for k:1 thru 10 do(
+for i:1 thru n do(
+y[i]:float((b[i]−sum(a[i,j]·x[j],j,1,i−1)−sum(a[i,j]·x[j],j,i+1,n))/a[i,i])),
+for i:1 thru n do(
+x[i]:y[i]), print(k,"","","",x[1],"","","",x[2],"","","",x[3]))$
+for p:1 thru n do print('x[p]=x[p])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Gauss Siedel Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* gauss-seidel method by Matrix */
+kill(all)$
+'n=n:3;
+'a=a:matrix([5,1,2],[3,−9,−4],[1,2,−7]);
+'x=x:matrix([0],[0],[0]);'b=b:matrix([10],[14],[−33]);
+for k:1 thru 10 do(
+for i:1 thru n do (
+x[i]:float((b[i]−sum(a[i,j].x[j],j,1,i−1)−sum(a[i,j].x[j],j,i+1,n))/a[i,i])),
+print(k,"It gives:", 'x[1]=x[1],'x[2]=x[2],'x[3]=x[3]))$
+for p:1 thru n do print('x[p]=x[p])$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* gauss-seidel method by Normal Way*/
+kill(all)$x1:0.0;x2:0.0;x3:0.0;
+print("itr","","","","","solution")$
+for i:1 thru 10 do(
+x1:(10−x2−2.0·x3)/5,
+x2:(−14+3·x1−4·x3)/9,
+x3:(33+x1+2·x2)/7,
+print(i,"","","","x1=",x1,"x2=",x2,"x3=",x3))$
+print("x1=",x1)$print("x2=",x2)$
+print("x3=",x3)$
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Lagrange Interpolation
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+/* lagrange interpolation*/
+kill(all)$'N=N:3;
+'sum=sum:0;
+lagrange(N,n):=product(if equal(k,n)then 1
+else(x−x[k])/(x[n]−x[k]),k,1,N);
+for i:1 thru N do(sum:f(x[i])·lagrange(N,i)+sum);
+display(sum)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$'N=N:3;'sum=sum:0;
+'x[1]=x[1]:1;
+'x[2]=x[2]:2;
+'x[3]=x[3]:3;
+lagrange(N,n):=product(if equal(k,n)then 1
+else(x−x[k])/(x[n]−x[k]),k,1,N);
+for i:1 thru N do(sum:f(x[i])·lagrange(N,i)+sum);
+subst([f(x[1])=1,f(x[2])=4,f(x[3])=9],sum);
+ratsimp(%);ev(%,x=2.5);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Newton Interpolation
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$'n=n:3;'sum=sum:0;
+'x[0]=x[0]:0;
+'x[1]=x[1]:5;
+'x[2]=x[2]:10;
+'x[3]=x[3]:15;
+divdiff(n):=sum(f(x[i])/product(if equal (j,i)then 1
+else(x[i]−x[j]),j,0,n),i,0,n)$
+p[n](x):=sum(divdiff(i)·product(if(i<=j)then 1
+ else (x−x[j]),j,0,n),i,0,n)$
+subst([f(x[0])=53,f(x[1])=127,f(x[2])=213,f(x[3])=378],
+ 'p[3](x)=p[3](x));
+ratsimp(%);ev(%,x=8.0);
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Trapezoidal rule
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+x0:1;
+x1:5/4;
+x2:3/2;
+x3:7/4;
+x4:2;
+h:(x4−x0)/4;
+f(x):=1/x;
+'integrate(1/x,x,1,2)=I:h/2·(f(x0)+2·(f(x1)+f(x2)+f(x3))+f(x4)),numer;
+'Exact−value=exact:(integrate(1/x,x,1,2));
+exact:float(exact);
+'err=err:abs(I−exact);
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Simpson Rule
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+a:1.0;
+b:2.0;
+f(x):=1/x;
+h:(b−a)/4$  /* n=4 */
+'integrate(1/x,x,1,2)=I:h/3·(f(a)+4·f(a+h)+4·f(a+3·h)+2·f(a+2·h)+f(b));
+'Exact=I1:(integrate(1/x,x,1,2));
+Exact:float(I1);
+'err=err:abs(I−float(Exact));
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+a:0.0;
+b:1.0;
+f(x):=x^2+1;
+h:(b−a)/2.0$
+'integrate((1+x^2),x,0,1)=I:h/3·(f(a)+4·f((a+b)/2)+f(b));
+'I1=I1:(integrate((1+x^2),x,0,1));
+I1:float(I1);
+'err=err:abs(I−float(I1));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Euler's Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+f(x,y):= x^2+y;
+x0:0;
+y0:1;
+xn:0.4;
+n:4;
+h:0.1;
+array(yn,flonum,4)$
+print(" ","x0"," ","y0"," " ,"f(x0,y0)"," ","yn")$
+for i:1 thru n do(
+slope:f(x0,y0),
+yn[i]:y0+h·slope,
+print(i,"iteration"),
+print(" ",x0," ",y0," ",slope," ",yn[i]),
+y0:yn[i],
+x0:x0+h);
+print("The approximation y(0.4)=",yn[4])$
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Runge Kutta Method
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+kill(all)$
+f(x,y):= x^2+y;
+x0:0;
+y0:1;
+xn:0.4;
+n:4;
+h:0.1;
+print(" ","x0"," ","y0"," ","yn")$
+for i:1 thru n do(
+k[1]:h·f(x0,y0),
+k[2]:h·f(x0+h/2,y0+k[1]/2),
+k[3]:h·f(x0+h/2,y0+k[2]/2),
+ k[4]:h·f(x0+h,y0+k[3]) ,
+yn[i]:y0+1/6·(k[1]+2·k[2]+2·k[3]+k[4]),
+print(i,"iteration"),
+print(" ",x0," ",y0," ",yn[i]),
+y0:yn[i],
+x0:x0+h);
+print("The approximation y(0.4)=",yn[4])$
+
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$

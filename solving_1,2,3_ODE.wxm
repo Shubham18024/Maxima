@@ -1,0 +1,141 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 22.04.0 ] */
+/* [wxMaxima: title   start ]
+Solving first,second and third ODE 
+   [wxMaxima: title   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends(y,x)$
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+depends(y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(diff(y,x)=3*x**2,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(diff(y,x)+2*y=0,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(diff(y,x,2)+4*y=0,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ode2(diff(y,x,2)=9*y,y,x);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Solving first ODE with Initial value problem
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: x**2*'diff(y,x)+3*y*x=sin(x)/x;
+sol: ode2(eq,y,x);
+sol_c1:ic1(sol,x=%pi,y=0);
+wxplot2d(rhs(sol_c1),[x,-1,10]);
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Now using desolve() and atvalue() to solve ode of order 1
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: 'diff(y(x),x)+y(x)=0;
+atvalue(y(x),x=0,1);
+desolve([eq],[y(x)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+atvalue(y(x),x=0,1) means at x=0 y(x) become 1
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: section start ]
+Solving second ODE with Initial value problem and boundary value problem
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: 'diff(y,x,2)+y*'diff(y,x)**3=0;
+sol: ode2(eq,y,x);
+ratsimp(ic2(sol,x=0,y=0,'diff(y,x)=2));
+
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: comment start ]
+The ratsimp function in Maxima is used to perform rational simplification. It is an abbreviation for "rational simplification." When you have an expression involving rational numbers, fractions, or algebraic expressions, ratsimp can simplify and manipulate the expression to a more compact or canonical form.
+In this example, the expression (x^2 + 2*x + 1) / (x + 1) is simplified using ratsimp. The function simplifies the numerator and denominator and cancels out the common factor (x + 1), resulting in x + 1.
+By applying ratsimp, Maxima performs algebraic manipulations to simplify the expression by canceling common factors, reducing fractions, and applying other simplification techniques specific to rational expressions.
+
+The factor function in Maxima is used to factorize polynomial expressions into their irreducible factors. It can be applied to both univariate (single-variable) and multivariate (multiple-variable) polynomial expressions.
+The expression x^3 - 1 is factored using factor. The function breaks down the polynomial expression into irreducible factors. In this case, it factors as (x - 1)*(x^2 + x + 1), indicating that x - 1 and x^2 + x + 1 are the irreducible factors of the polynomial.
+   [wxMaxima: comment end   ] */
+
+
+/* [wxMaxima: input   start ] */
+bc2(sol,x=0,y=1,x=1,y=3);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+ratsimp(bc2(sol,x=0,y=1,x=1,y=3));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+factor(bc2(sol,x=0,y=1,x=1,y=3));
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: subsect start ]
+Solving using desolve 
+   [wxMaxima: subsect end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: 'diff(y(x),x,2)+4*'diff(y(x),x)+3*y(x)=0;
+atvalue(y(x),x=0,0);
+atvalue(diff(y(x),x),x=0,12);
+desolve([eq],[y(x)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: 'diff(y(x),x,2)-10*'diff(y(x),x)+9*y(x)=5*x;
+atvalue(y(x),x=0,-1);
+atvalue(diff(y(x),x),x=0,2);
+desolve([eq],[y(x)]);
+/* [wxMaxima: input   end   ] */
+
+
+/* [wxMaxima: section start ]
+Solving third ODE
+   [wxMaxima: section end   ] */
+
+
+/* [wxMaxima: input   start ] */
+eq: 'diff(y(x),x,3)+3*'diff(y(x),x,2)+4*'diff(y(x),x)+12*y(x)=0;
+sol:desolve([eq],[y(x)]);
+/* [wxMaxima: input   end   ] */
+
+
+
+/* Old versions of Maxima abort on loading files that end in a comment. */
+"Created with wxMaxima 22.04.0"$
